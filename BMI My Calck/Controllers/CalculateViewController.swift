@@ -9,7 +9,7 @@ import UIKit
 
 class CalculateViewController: UIViewController {
     
-    private var bmiValue = "0.0"
+    private var calculatorBrain = CalculateBrain()
     
     @IBOutlet var heightLabel: UILabel!
     @IBOutlet var weightLabel: UILabel!
@@ -34,8 +34,8 @@ class CalculateViewController: UIViewController {
         
         let height = heightSlider.value
         let weight = weightSlider.value
-        let bmi = weight / ( height * height )
-        bmiValue = String(format: "%.1f", bmi)
+        
+        calculatorBrain.calculateBMI(height: height, weight: weight)
         
         self.performSegue(withIdentifier: "goToResults", sender: self)
 
@@ -47,7 +47,9 @@ class CalculateViewController: UIViewController {
         
         resultVC.modalPresentationStyle = .fullScreen
         resultVC.modalTransitionStyle = .flipHorizontal
-        resultVC.bmiValue = bmiValue
+        resultVC.bmiValue = calculatorBrain.getBMIValue()
+        resultVC.color = calculatorBrain.getColor()
+        resultVC.advice = calculatorBrain.getAdvice()
     }
 
 }
